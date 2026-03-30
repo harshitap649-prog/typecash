@@ -281,30 +281,8 @@ function handlePremiumUnlock() {
         return;
     }
     
-    // Show the ad popup first
-    showWatchAdsPopup();
-}
-
-function showWatchAdsPopup() {
-    const popup = document.createElement('div');
-    popup.className = 'level-up-popup';
-    popup.innerHTML = `
-        <div class="popup-content">
-            <h2>🚀 Unlock Premium Mode</h2>
-            <p>Watch <strong>1</strong> popunder ad to unlock 2x earnings for 2 minutes!</p>
-            <div style="margin: 20px 0;">
-                <p style="font-size: 0.9rem; color: var(--text-dim);">
-                    ✨ Premium Benefits:<br>
-                    • 2x earnings on all tasks<br>
-                    • Lasts for 2 minutes<br>
-                    • Watch 1 popunder ad to unlock
-                </p>
-            </div>
-            <button onclick="watchPopunderAd()">Watch Ad Now</button>
-            <button onclick="this.parentElement.parentElement.remove()" style="background: #666; margin-top: 10px;">Close</button>
-        </div>
-    `;
-    document.body.appendChild(popup);
+    // Directly open popunder ad without any popup
+    triggerPopunderAd();
 }
 
 function watchPopunderAd() {
@@ -336,26 +314,87 @@ function triggerPopunderAd() {
             <html>
             <head>
                 <title>Advertisement</title>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <script src="https://pl29015767.profitablecpmratenetwork.com/2d/cb/f1/2dcbf16797a4752c55580fa4140a27da.js"></script>
+                <style>
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        background: #000;
+                        font-family: Arial, sans-serif;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        color: #666;
+                    }
+                    .loading {
+                        text-align: center;
+                    }
+                    .loading-spinner {
+                        border: 4px solid #333;
+                        border-top: 4px solid #00ff88;
+                        border-radius: 50%;
+                        width: 40px;
+                        height: 40px;
+                        animation: spin 1s linear infinite;
+                        margin: 0 auto 20px;
+                    }
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                </style>
             </head>
-            <body style="margin:0;padding:0;background:#000;">
-                <div style="display:flex;justify-content:center;align-items:center;height:100vh;color:#666;font-family:Arial;">
-                    Loading advertisement...
+            <body>
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <h2>Loading Advertisement...</h2>
+                    <p>Please wait while the ad loads</p>
                 </div>
+                <script>
+                    // Fallback ad loading
+                    setTimeout(function() {
+                        document.body.innerHTML = \`
+                            <div style="text-align: center; padding: 40px;">
+                                <h2 style="color: #00ff88;">Advertisement Space</h2>
+                                <p style="color: #666;">This is an advertisement window</p>
+                                <p style="color: #888; font-size: 14px;">You can close this window when you're done</p>
+                                <button onclick="window.close()" style="
+                                    background: #00ff88;
+                                    color: #000;
+                                    border: none;
+                                    padding: 10px 20px;
+                                    border-radius: 5px;
+                                    cursor: pointer;
+                                    font-weight: bold;
+                                    margin-top: 20px;
+                                ">Close Window</button>
+                            </div>
+                        \`;
+                    }, 3000);
+                </script>
             </body>
             </html>
         `);
         
-        // Don't minimize - let user see the ad window
-        // popunderWindow.blur();
-        // window.focus();
+        // Focus on the new window to ensure it's visible
+        popunderWindow.focus();
         
-        // Don't auto-close - let user close manually
+        // Monitor when the window is closed
+        const checkWindowClosed = setInterval(() => {
+            if (popunderWindow.closed) {
+                clearInterval(checkWindowClosed);
+                // Start premium timer when user closes the ad
+                activatePremiumAfterAd();
+            }
+        }, 1000);
     }
     
     // Alternative method: trigger popunder through click simulation
     const popunderLink = document.createElement('a');
-    popunderLink.href = 'https://pl29015767.profitablecpmratenetwork.com/2d/cb/f1/2dcbf16797a4752c55580fa4140a27da.js';
+    popunderLink.href = 'about:blank';
     popunderLink.target = '_blank';
     popunderLink.style.display = 'none';
     document.body.appendChild(popunderLink);
@@ -378,11 +417,8 @@ function triggerPopunderAd() {
     }, 1000);
 }
 
-function completeAdWatch() {
-    // Remove ad watching popup
-    document.querySelector('.level-up-popup').remove();
-    
-    // Unlock premium for 2 minutes after watching 1 ad
+function activatePremiumAfterAd() {
+    // Unlock premium for 2 minutes after user closes the ad
     isPremiumMode = true;
     premiumEndTime = Date.now() + (2 * 60 * 1000); // 2 minutes
     localStorage.setItem('premiumEndTime', premiumEndTime);
@@ -393,9 +429,9 @@ function completeAdWatch() {
     showPremiumUnlockedPopup();
 }
 
-function showPremiumUnlockedPopup() {
-    const popup = document.createElement('div');
-    popup.className = 'level-up-popup';
+function completeAdWatch() {
+    // Remove ad watching popup
+    document.querySelector('.level-up-popup').remove();
     popup.innerHTML = `
         <div class="popup-content">
             <h2>🎉 Premium Mode Unlocked!</h2>
@@ -504,13 +540,13 @@ initializePremium();
 function showAd(type) {
     switch(type) {
         case 'banner':
-            console.log("BANNER AD: Would show banner ad here");
+            // Banner ads are handled by HTML scripts
             break;
         case 'social':
-            console.log("SOCIAL BAR AD: Would show social media bar ad here");
+            // Social bar ads are handled by HTML scripts
             break;
         case 'popunder':
-            console.log("POPUNDER AD: Would show popunder ad here");
+            // Popunder ads are handled by triggerPopunderAd function
             break;
         case 'rewarded':
             console.log("REWARDED VIDEO AD: Would show video ad for premium unlock");
@@ -878,9 +914,6 @@ function levelUp() {
     document.getElementById('balance').innerText = balance.toFixed(2);
     const mobileBalance = document.getElementById('balance-mobile');
     if (mobileBalance) mobileBalance.innerText = balance.toFixed(2);
-    
-    // Show ad on level up
-    showAd('popunder');
 }
 
 function showWithdrawalPopup() {
@@ -890,7 +923,7 @@ function showWithdrawalPopup() {
     if (balance >= 50) {
         popup.innerHTML = `
             <div class="popup-content">
-                <h2>💰 Withdraw Funds</h2>
+                <h2> Withdraw Funds</h2>
                 <p>Available Balance: $${balance.toFixed(2)}</p>
                 <p>Select your withdrawal method:</p>
                 <div style="display: flex; flex-direction: column; gap: 10px; margin: 20px 0;">
@@ -904,11 +937,11 @@ function showWithdrawalPopup() {
         const remaining = (50 - balance).toFixed(2);
         popup.innerHTML = `
             <div class="popup-content">
-                <h2>💰 Insufficient Funds</h2>
+                <h2> Insufficient Funds</h2>
                 <p>Current Balance: $${balance.toFixed(2)}</p>
                 <p>You need $${remaining} more to withdraw via PayPal/Crypto.</p>
                 <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 20px 0;">
-                    <p style="margin: 0; font-size: 0.9rem;">⚠️ Account verification required for withdrawals</p>
+                    <p style="margin: 0; font-size: 0.9rem;"> Account verification required for withdrawals</p>
                 </div>
                 <button class="withdraw-btn" onclick="verifyAccount()">Verify Account</button>
                 <button onclick="this.parentElement.parentElement.remove()" style="background: #666; margin-top: 10px;">Keep Typing</button>
@@ -1089,6 +1122,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Prevent copy-paste in typing input fields
+    function preventCopyPaste(inputElement) {
+        if (inputElement) {
+            // Prevent paste
+            inputElement.addEventListener('paste', (e) => {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Prevent cut
+            inputElement.addEventListener('cut', (e) => {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Prevent copy
+            inputElement.addEventListener('copy', (e) => {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Prevent context menu
+            inputElement.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Prevent drag and drop
+            inputElement.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                return false;
+            });
+            
+            inputElement.addEventListener('drop', (e) => {
+                e.preventDefault();
+                return false;
+            });
+        }
+    }
+    
+    preventCopyPaste(dashboardInput);
+    preventCopyPaste(mobileInput);
+    
     // Premium buttons
     const premiumBtn = document.getElementById('premium-btn');
     const mobilePremiumBtn = document.getElementById('premium-btn-mobile');

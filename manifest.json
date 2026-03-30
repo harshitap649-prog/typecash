@@ -1,0 +1,17 @@
+{
+  "name": "TypeCash - Earn by Typing",
+  "short_name": "TypeCash",
+  "description": "Earn money by typing text tasks",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0c",
+  "theme_color": "#00ff88",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9IiMwYTBhMGMiLz4KPHR5cGUNCg0KCQkJCQkJCQkJaWQ9bG9nby1zdmcNCgkJCQkJCQkJCXN0eWxlPSJmb250LXdlaWdodDogODAwOyBmb250LXNpemU6IDQ4cHg7IGZvbnQtZmFtaWx5OiAnT3V0Zml0Jywgc2Fucy1zZXJpZjsiDQoJCQkJCQkJCQl4PSI1MCIgeT0iMTAwIg0KCQkJCQkJCQkJZmlsbD0iI2ZmZmZmZiINCgkJCQkJCQkJCWQ9Ik0xMDAgNjBIMTIwVjEwMEgxMDBWNjBaIiAvPg0KCQkJCQkJCQk8dGV4dCB4PSI1MCIgeT0iMTAwIiBmaWxsPSIjMDBmZjg4Ij5UeXBlPC90ZXh0Pg0KCQkJCQkJCQk8dGV4dCB4PSI5MCIgeT0iMTAwIiBmaWxsPSIjZmZmZmZmIj5DYXNoPC90ZXh0Pg0KCQkJCQkJCTwvdGV4dD4KPC9zdmc+",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
