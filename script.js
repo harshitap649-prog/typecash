@@ -453,7 +453,7 @@ function showPremiumActivePopup() {
     popup.className = 'level-up-popup';
     popup.innerHTML = `
         <div class="popup-content">
-            <h2>⚡ Premium Mode Active</h2>
+            <h2> Premium Mode Active</h2>
             <div class="bonus">2X EARNINGS</div>
             <p>Time remaining: <strong>${minutes}:${seconds.toString().padStart(2, '0')}</strong></p>
             <p>Keep typing to maximize your double earnings!</p>
@@ -468,10 +468,25 @@ function showPremiumExpiredPopup() {
     popup.className = 'level-up-popup';
     popup.innerHTML = `
         <div class="popup-content">
-            <h2>⏰ Premium Mode Expired</h2>
+            <h2> Premium Mode Expired</h2>
             <p>Your 2x earnings period has ended.</p>
             <p>Watch 1 more popunder ad to unlock premium again!</p>
             <button onclick="this.parentElement.parentElement.remove()">Got it</button>
+        </div>
+    `;
+    document.body.appendChild(popup);
+}
+
+function showPremiumUnlockedPopup() {
+    const popup = document.createElement('div');
+    popup.className = 'level-up-popup';
+    popup.innerHTML = `
+        <div class="popup-content">
+            <h2> Premium Mode Unlocked!</h2>
+            <div class="bonus">2X EARNINGS ACTIVATED</div>
+            <p>You now have <strong>2 minutes</strong> of double earnings!</p>
+            <p>Complete as many tasks as possible to maximize your earnings!</p>
+            <button onclick="this.parentElement.parentElement.remove()">Start Earning 2x!</button>
         </div>
     `;
     document.body.appendChild(popup);
