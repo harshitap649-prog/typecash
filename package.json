@@ -1,0 +1,13 @@
+{
+  "name": "typecash-earn-by-typing",
+  "version": "1.0.0",
+  "description": "Earn money by typing text challenges",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo 'Static site - no build needed'"
+  },
+  "keywords": ["typing", "earn", "game", "money"],
+  "author": "TypeCash",
+  "license": "MIT",
+  "type": "module"
+}
