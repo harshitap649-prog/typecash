@@ -370,122 +370,49 @@ function watchPopunderAd() {
     localStorage.setItem('premiumEndTime', premiumEndTime);
     
     updatePremiumButton(120); // 2 minutes in seconds
-    startPremiumTimer(120);
     
     showPremiumUnlockedPopup();
 }
 
 function triggerPopunderAd() {
-    // Create and trigger actual popunder ad
-    const popunderWindow = window.open('', '_blank', 'width=800,height=600,left=100,top=100,scrollbars=yes,toolbar=yes,location=yes,resizable=yes');
+    // Create and inject the popunder script directly
+    const script = document.createElement('script');
+    script.src = 'https://pl29015767.profitablecpmratenetwork.com/2d/cb/f1/2dcbf16797a4752c55580fa4140a27da.js';
+    script.async = true;
+    
+    // Add script to page to trigger popunder
+    document.head.appendChild(script);
+    
+    // Also try to open a new window as backup
+    const popunderWindow = window.open('about:blank', '_blank', 'width=1,height=1,left=9999,top=9999,scrollbars=no,toolbar=no,location=no,resizable=no');
     
     if (popunderWindow) {
-        // Load the popunder ad script in the new window
-        popunderWindow.document.write(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Advertisement</title>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <script src="https://pl29015767.profitablecpmratenetwork.com/2d/cb/f1/2dcbf16797a4752c55580fa4140a27da.js"></script>
-                <style>
-                    body {
-                        margin: 0;
-                        padding: 0;
-                        background: #000;
-                        font-family: Arial, sans-serif;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        height: 100vh;
-                        color: #666;
-                    }
-                    .loading {
-                        text-align: center;
-                    }
-                    .loading-spinner {
-                        border: 4px solid #333;
-                        border-top: 4px solid #00ff88;
-                        border-radius: 50%;
-                        width: 40px;
-                        height: 40px;
-                        animation: spin 1s linear infinite;
-                        margin: 0 auto 20px;
-                    }
-                    @keyframes spin {
-                        0% { transform: rotate(0deg); }
-                        100% { transform: rotate(360deg); }
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <h2>Loading Advertisement...</h2>
-                    <p>Please wait while the ad loads</p>
-                </div>
-                <script>
-                    // Fallback ad loading
-                    setTimeout(function() {
-                        document.body.innerHTML = \`
-                            <div style="text-align: center; padding: 40px;">
-                                <h2 style="color: #00ff88;">Advertisement Space</h2>
-                                <p style="color: #666;">This is an advertisement window</p>
-                                <p style="color: #888; font-size: 14px;">You can close this window when you're done</p>
-                                <button onclick="window.close()" style="
-                                    background: #00ff88;
-                                    color: #000;
-                                    border: none;
-                                    padding: 10px 20px;
-                                    border-radius: 5px;
-                                    cursor: pointer;
-                                    font-weight: bold;
-                                    margin-top: 20px;
-                                ">Close Window</button>
-                            </div>
-                        \`;
-                    }, 3000);
-                </script>
-            </body>
-            </html>
-        `);
+        popunderWindow.blur();
+        window.focus();
         
-        // Focus on the new window to ensure it's visible
-        popunderWindow.focus();
+        // Load the ad script in the popunder window
+        const popunderScript = popunderWindow.document.createElement('script');
+        popunderScript.src = 'https://pl29015767.profitablecpmratenetwork.com/2d/cb/f1/2dcbf16797a4752c55580fa4140a27da.js';
+        popunderWindow.document.head.appendChild(popunderScript);
         
-        // Monitor when the window is closed
-        const checkWindowClosed = setInterval(() => {
-            if (popunderWindow.closed) {
-                clearInterval(checkWindowClosed);
-                // Start premium timer when user closes the ad
-                activatePremiumAfterAd();
+        // Close the popunder after a delay
+        setTimeout(() => {
+            if (popunderWindow && !popunderWindow.closed) {
+                popunderWindow.close();
             }
-        }, 1000);
+        }, 5000);
     }
     
-    // Alternative method: trigger popunder through click simulation
-    const popunderLink = document.createElement('a');
-    popunderLink.href = 'about:blank';
-    popunderLink.target = '_blank';
-    popunderLink.style.display = 'none';
-    document.body.appendChild(popunderLink);
-    
-    // Simulate click to trigger popunder
-    const clickEvent = new MouseEvent('click', {
-        view: window,
-        bubbles: true,
-        cancelable: true,
-        ctrlKey: true,
-        shiftKey: true
-    });
-    popunderLink.dispatchEvent(clickEvent);
-    
-    // Clean up
+    // Remove the script after execution
     setTimeout(() => {
-        if (popunderLink.parentNode) {
-            popunderLink.parentNode.removeChild(popunderLink);
+        if (script.parentNode) {
+            script.parentNode.removeChild(script);
         }
+    }, 2000);
+    
+    // Activate premium after triggering the ad
+    setTimeout(() => {
+        activatePremiumAfterAd();
     }, 1000);
 }
 
