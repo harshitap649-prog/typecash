@@ -943,15 +943,13 @@ function showWithdrawalPopup() {
                 <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 20px 0;">
                     <p style="margin: 0; font-size: 0.9rem;"> Account verification required for withdrawals</p>
                 </div>
-                <button class="withdraw-btn" onclick="verifyAccount()">Verify Account</button>
-                <button onclick="this.parentElement.parentElement.remove()" style="background: #666; margin-top: 10px;">Keep Typing</button>
+                                <button onclick="this.parentElement.parentElement.remove()" style="background: #666;">Keep Typing</button>
             </div>
         `;
     }
     
     document.body.appendChild(popup);
 }
-
 function verifyAccount() {
     // Remove current popup
     document.querySelector('.level-up-popup').remove();
