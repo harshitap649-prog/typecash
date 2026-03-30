@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeCash | Earn by Typing</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Modern Dashboard Layout -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-logo">
+                Type<span>Cash.</span>
+            </div>
+            
+            <div class="balance-main">
+                <div class="label">Current Balance</div>
+                <div class="amount">$<span id="balance">0.00</span></div>
+            </div>
+            
+            <div class="sidebar-nav">
+                <button class="nav-item active" onclick="navigateTo('typing')">⌨️ Type & Earn</button>
+                <button class="nav-item" onclick="navigateTo('withdraw')">💰 Withdraw</button>
+                <button class="nav-item" onclick="navigateTo('statistics')">📊 Statistics</button>
+                <button class="nav-item" onclick="navigateTo('leaderboard')">🏆 Leaderboard</button>
+                <button class="nav-item" onclick="navigateTo('settings')">⚙️ Settings</button>
+            </div>
+        </div>
+
+        <!-- Center Console -->
+        <div class="center-console">
+            <!-- Withdrawal Progress at Top -->
+            <div class="card withdrawal-progress-container">
+                <div class="progress-label">Withdrawal Progress</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="withdrawal-progress"></div>
+                </div>
+                <div class="progress-text" id="withdrawal-text">$50.00 until $50.00 Payout</div>
+            </div>
+
+            <!-- Typing Zone -->
+            <div class="card typing-box">
+                <!-- Stats Pills -->
+                <div class="stats-pills">
+                    <div class="stat-pill">WPM: <span id="wpm">0</span></div>
+                    <div class="stat-pill">Accuracy: <span id="accuracy">100</span>%</div>
+                    <div class="stat-pill">Level: <span id="level">1</span></div>
+                    <div class="stat-pill">🔥 <span id="streak">0</span> days</div>
+                </div>
+
+                <!-- Target Text -->
+                <div id="target-text">Loading your task...</div>
+                
+                <!-- Input Area -->
+                <textarea id="input-field" placeholder="Start typing here to earn..." autofocus></textarea>
+                
+                <!-- Submit Button -->
+                <div class="submit-container">
+                    <button id="next-task" class="btn-submit">Submit & Earn</button>
+                </div>
+            </div>
+
+            <!-- Premium Button -->
+            <button id="premium-btn" class="btn-premium">Unlock Premium Mode</button>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <!-- Top Earners Leaderboard -->
+            <div class="card leaderboard-section">
+                <h3>🏆 Top Earners of the Day</h3>
+                <div id="leaderboard-list"></div>
+            </div>
+
+            <!-- Skyscraper Ad -->
+            <div class="skyscraper-ad">
+                <p>SKYSCRAPER AD</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Layout (Original) -->
+    <div class="app-wrapper">
+        <!-- Mobile Header -->
+        <header class="main-header">
+            <h1 class="logo">Type<span>Cash.</span></h1>
+            <div class="balance-card">
+                <span class="label">Total Earnings</span>
+                <span class="amount">$<span id="balance-mobile">0.00</span></span>
+            </div>
+            <div class="level-card">
+                <span class="label">Level</span>
+                <span class="level-number" id="level-mobile">1</span>
+            </div>
+            <div class="streak-card">
+                <span class="label">🔥 Streak</span>
+                <span id="streak-mobile">0 days</span>
+            </div>
+        </header>
+
+        <main class="typing-container">
+            <div class="stats-bar">
+                <div class="stat">WPM: <span id="wpm-mobile">0</span></div>
+                <div class="stat">Accuracy: <span id="accuracy-mobile">100</span>%</div>
+            </div>
+
+            <div class="withdrawal-progress-container">
+                <div class="progress-label">Withdrawal Progress</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="withdrawal-progress-mobile"></div>
+                </div>
+                <div class="progress-text" id="withdrawal-text-mobile">$50.00 until $50.00 Payout</div>
+            </div>
+
+            <div class="typing-box card">
+                <p id="target-text-mobile">Loading your task...</p>
+                <textarea id="input-field-mobile" placeholder="Start typing here to earn..." autofocus></textarea>
+            </div>
+
+            <div class="action-zone">
+                <button id="next-task-mobile" class="btn-primary">Submit & Earn</button>
+                <button id="premium-btn-mobile" class="btn-premium">Unlock Premium</button>
+            </div>
+        </main>
+
+        <div class="leaderboard-section card">
+            <h3>🏆 Top Earners of the Day</h3>
+            <div id="leaderboard-list-mobile"></div>
+        </div>
+
+        <nav class="bottom-nav">
+            <div class="nav-item active">⌨️ Type</div>
+            <div class="nav-item" onclick="showWithdrawalPopup()">💰 Withdraw</div>
+            <div class="nav-item">📊 Stats</div>
+        </nav>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
