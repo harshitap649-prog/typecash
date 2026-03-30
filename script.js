@@ -683,12 +683,31 @@ function updateStreakDisplay() {
 }
 
 function updateWithdrawalProgress() {
+    const progress = (balance / 50) * 100;
+    const remaining = (50 - balance).toFixed(2);
+    
+    // Update desktop progress bar
     const progressElement = document.getElementById('withdrawal-progress');
     if (progressElement) {
-        const progress = (balance / 50) * 100;
-        const remaining = (50 - balance).toFixed(2);
         progressElement.style.width = `${Math.min(progress, 100)}%`;
-        document.getElementById('withdrawal-text').innerText = `${remaining} until $50.00 Payout`;
+    }
+    
+    // Update mobile progress bar
+    const mobileProgressElement = document.getElementById('withdrawal-progress-mobile');
+    if (mobileProgressElement) {
+        mobileProgressElement.style.width = `${Math.min(progress, 100)}%`;
+    }
+    
+    // Update desktop text
+    const progressText = document.getElementById('withdrawal-text');
+    if (progressText) {
+        progressText.innerText = `${remaining} until $50.00 Payout`;
+    }
+    
+    // Update mobile text
+    const mobileProgressText = document.getElementById('withdrawal-text-mobile');
+    if (mobileProgressText) {
+        mobileProgressText.innerText = `${remaining} until $50.00 Payout`;
     }
 }
 
@@ -748,8 +767,6 @@ function loadNewText() {
     // Show ads
     showAd('banner');
     
-    // Show text progression notification
-    showTextProgressNotification();
 }
 
 function moveToNextText() {
